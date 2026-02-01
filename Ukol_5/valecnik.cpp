@@ -2,36 +2,36 @@
 
 Valecnik::Valecnik(const std::string& jmeno, double zivoty, double sila, double brneni)
     : Postava(jmeno, zivoty, sila) { // Volání konstruktoru předka
-
+    // TODO: Inicializujte atribut _brneni
     _brneni = brneni;
 }
 
 void Valecnik::utok(Postava& cil) {
-
-    if(jeZiva())
-    {
-        if(_zivoty < 0,3 * _maxZivoty)
-        {
-            std::cout << this->getJmeno() << "je v zurivem modu a utoci silou: " << this->_sila * 1.5 << std::endl;
-            cil.prijmiUtok(this->_sila * 1.5);
-        }
-        else
-        {
-            std::cout << this->getJmeno() << "utoci na " << cil.getJmeno() << "silou " << this->_sila << std::endl;
-            cil.prijmiUtok(this->_sila);
-        }
+    // TODO: Implementujte útok válečníka
+    // 1. Zkontrolujte, zda má válečník méně než 30 % maximálních životů (berserk mode).
+    //    (Pozor: v zadání není max_hp, pro zjednodušení předpokládejme, že < 30 HP = berserk)
+    // 2. Pokud ano, vypište hlášku o zuřivosti a útočte silou * 1.5
+    // 3. Pokud ne, útočte normální silou.
+    // Tip: Využijte metodu cil.prijmiUtok()
+    if (_zivoty < 0.3 * _maxZivoty) {
+        std::cout << _jmeno << " je v berserk modu" << std::endl;
+        cil.prijmiUtok(this->_sila * 1.5);
+    } else {
+        cil.prijmiUtok(this->_sila);
     }
 }
 
 void Valecnik::prijmiUtok(double poskozeni) {
-
+    // TODO: Implementujte obranu válečníka
+    // 1. Snižte příchozí poškození o hodnotu _brneni.
+    // 2. Pokud je výsledek menší než 0, nastavte ho na 0.
+    // 3. Vypište informaci o blokování.
+    // 4. Zavolejte metodu předka Postava::prijmiUtok() se sníženým poškozením.
     double snizenePoskozeni = poskozeni - _brneni;
-
-    if(snizenePoskozeni < 0)
-    {
+    if (snizenePoskozeni < 0) {
         snizenePoskozeni = 0;
     }
-    std::cout << this->getJmeno() << "blokuje " << _brneni << "poskozeni brnenim!" << std::endl;
+    std::cout << _jmeno << " blokuje " << poskozeni - snizenePoskozeni << " poškození." << std::endl;
     Postava::prijmiUtok(snizenePoskozeni);
 }
 
